@@ -8,14 +8,14 @@ import com.example.shoppinglist.data.db.dao.ShoppingDao
 import com.example.shoppinglist.data.db.entity.ShoppingItem
 
 @Database(entities = [ShoppingItem::class], version = 1)
-abstract class ShoppindDatabase : RoomDatabase() {
+abstract class ShoppingDatabase : RoomDatabase() {
 
     abstract fun getShoppingDao(): ShoppingDao
 
 
     companion object {
         @Volatile
-        private var instance: ShoppindDatabase? = null
+        private var instance: ShoppingDatabase? = null
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
@@ -24,7 +24,7 @@ abstract class ShoppindDatabase : RoomDatabase() {
 
         private fun createDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext,
-            ShoppindDatabase::class.java,
+            ShoppingDatabase::class.java,
             "shopping_db.db"
         ).build()
     }
