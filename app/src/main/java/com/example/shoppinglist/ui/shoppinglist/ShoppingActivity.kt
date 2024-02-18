@@ -10,20 +10,22 @@ import com.example.shoppinglist.data.db.entity.ShoppingItem
 import com.example.shoppinglist.data.repository.ShoppingRepository
 import com.example.shoppinglist.databinding.ActivityShoppingBinding
 import com.example.shoppinglist.other.ShoppingItemAdapter
+import org.kodein.di.android.kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.generic.instance
 
-class ShoppingActivity : AppCompatActivity() {
+class ShoppingActivity : AppCompatActivity(),KodeinAware {
     private val binding by lazy {
         ActivityShoppingBinding.inflate(layoutInflater)
     }
+    override val kodein by kodein()
+    private val factory: ShoppingViewModelFactory by instance()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val database = ShoppingDatabase(this)
-        val repository = ShoppingRepository(database)
-        val factory = ShoppingViewModelFactory(repository)
 
         val viewModel = ViewModelProviders.of(this, factory)[ShoppingViewModel::class.java]
 
